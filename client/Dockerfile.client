@@ -1,0 +1,27 @@
+# Use the official Node.js image
+FROM node:18
+
+# Set working directory
+WORKDIR /usr/src/app
+
+# Copy package.json and package-lock.json
+COPY package*.json ./
+#COPY C:\Users\MSI\Challenge\client\tsconfig.json ./
+
+# Install dependencies
+RUN npm install
+
+# Copy the rest of the application code
+COPY . .
+
+# Build the Nuxt.js application
+RUN npm run build
+# Copy the tsconfig.json file from .nuxt directory if it exists
+#RUN if [ -f .nuxt/tsconfig.json ]; then cp .nuxt/tsconfig.json ./; fi
+
+# Expose port 3000 (Nuxt.js default)
+EXPOSE 3000
+
+# Start the Nuxt.js application
+
+CMD ["npm", "start"]
