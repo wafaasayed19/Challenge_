@@ -1,4 +1,4 @@
-Docker Compose File
+###Docker Compose File
 The docker-compose.yml file consists of the following services:
 
 MySQL Database (my_mysql_db):
@@ -16,35 +16,22 @@ Configured to listen on port 443 with SSL.
 Acts as a reverse proxy for the Laravel API.
 
 Building and Starting Containers:
-
-sh
-Copy code
 docker-compose up --build
+
 Stopping Containers:
-
-sh
-Copy code
 docker-compose down
+
 Viewing Container Logs:
-
-sh
-Copy code
 docker-compose logs
+
 Restarting Docker Service:
-
-sh
-Copy code
 sudo systemctl restart docker
-Self-Signed SSL Certificate
-Generate SSL Certificate:
 
-sh
-Copy code
+##Self-Signed SSL Certificate
+#Generate SSL Certificate:
 openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout nginx-selfsigned.key -out nginx-selfsigned.crt
 Generate Diffie-Hellman Group:
 
-sh
-Copy code
 openssl dhparam -out dhparam.pem 2048
 Copy Certificates to Nginx Container:
-Add the following lines to docker-compose.yml:
+Add certificates to docker-compose.yml:
