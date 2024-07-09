@@ -1,27 +1,50 @@
-# Challenge
+Docker Compose File
+The docker-compose.yml file consists of the following services:
 
-## Overview
+MySQL Database (my_mysql_db):
 
-This repository contains a simple web application with two main components:
+Uses the mysql:5.7 image.
+Configured with environment variables for the database.
+PHP Laravel API (my_laravel_api):
 
-1. **API**: Written in Laravel PHP, the API serves as the backend for the application and listens on port 8000.
-2. **Client**: Developed using Nuxt.js, the client is the frontend of the application and listens on port 3000.
+Uses the php:8.0-apache image.
+Copies application source code and installs dependencies.
+Nginx Proxy (my_nginx_proxy):
 
-### Environment Variables
+Uses the nginx:latest image.
+Configured to listen on port 443 with SSL.
+Acts as a reverse proxy for the Laravel API.
 
-- **API Directory**: Take a look at the `.env` file in the API directory. It should contain the necessary credentials to connect to the database.
+Building and Starting Containers:
 
-  ```env
-    DB_CONNECTION=mysql
-    DB_HOST=db
-    DB_PORT=3306
-    DB_DATABASE=bookapi
-    DB_USERNAME=app
-    DB_PASSWORD=password
-  ```
+sh
+Copy code
+docker-compose up --build
+Stopping Containers:
 
-- **Client Directory**: Check the `.env` file in the Client directory. It should contain the connection string to connect to the API.
+sh
+Copy code
+docker-compose down
+Viewing Container Logs:
 
-  ```env
-    VITE_API_URL=http://api:8000
-  ```
+sh
+Copy code
+docker-compose logs
+Restarting Docker Service:
+
+sh
+Copy code
+sudo systemctl restart docker
+Self-Signed SSL Certificate
+Generate SSL Certificate:
+
+sh
+Copy code
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout nginx-selfsigned.key -out nginx-selfsigned.crt
+Generate Diffie-Hellman Group:
+
+sh
+Copy code
+openssl dhparam -out dhparam.pem 2048
+Copy Certificates to Nginx Container:
+Add the following lines to docker-compose.yml:
